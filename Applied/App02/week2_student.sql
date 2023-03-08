@@ -2,7 +2,7 @@
 Databases Week 2 Tutorial Class
 week2_student.sql
 
-student id:
+student id: 31862616
 student name:
 last modified date:
 
