@@ -1,0 +1,132 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="16A06A4E-CC06-FB18-4CFF-98AC700AE8FC" name="ORDERLINE">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>DF8991A3-9381-3A68-DFB7-17B1E6A13C1E</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ol_id" id="715FB1DA-6471-730E-A0F1-C4DC5DA41FFA">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[Order Line ID]]></commentInRDBMS>
+<generatorID>9137817B-C0AD-D324-9D79-D0482CE44F3A</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,7,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ol_qtyordered" id="87E4EB9F-7FF1-9959-BE1A-C6A6DB63CE72">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[Order Line Quantity Ordered]]></commentInRDBMS>
+<generatorID>7ADD0FB8-4C60-2125-2006-8F32335FCF83</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ol_lineprice" id="CE6BA73F-827F-82F2-4A2A-25278F3A940E">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[Order Line Line Price]]></commentInRDBMS>
+<generatorID>1B411E69-F297-97ED-85A4-B88061627B70</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,8,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="order_no" id="3C0B4F38-DC4D-6756-9B5F-68471DD07BF9">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>BCA2BBA6-9C82-8F88-ABE3-6528015BE747</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D5F4FD62-64C0-BFC2-E2F2-01C3EE5961DD" referredColumn="C07CD8A2-6B7F-B7FA-DD4B-3C22663554B1"/>
+</associations>
+</Column>
+<Column name="prod_no" id="965ACF16-81B3-7204-2A35-D67AF21E1859">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>04F2EB62-8A01-6429-5EE1-E56C9D81E29E</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5A7F805E-C344-9B98-8F2F-8DAB78C6F2EE" referredColumn="2C0D2604-CD6E-83C6-DBC5-7298E8F2EA7D"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9A79CD6E-0169-64B0-F960-C24C648D2829" name="ORDERLINE_PK">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>14FDEA39-6CC9-2D83-8F27-C70631ECDBB1</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="715FB1DA-6471-730E-A0F1-C4DC5DA41FFA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="53336806-6CCF-91F3-AADB-F15F232CC560" name="orderline_nk">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>FED19443-9ACA-35CE-AEF8-96127246774D</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="965ACF16-81B3-7204-2A35-D67AF21E1859"/>
+<colUsage columnID="3C0B4F38-DC4D-6756-9B5F-68471DD07BF9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8E48A107-5BC5-02F5-7734-AB2311BE819C" name="ORDERS_ORDERLINE">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>C86C84BF-4B26-474E-A368-066FDAF1B720</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C0B4F38-DC4D-6756-9B5F-68471DD07BF9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E80BCF4A-AC26-39C0-8F8B-B75301BF8B9A" name="PRODUCT_ORDERLINE">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 08:23:07 UTC</createdTime>
+<generatorID>357470E5-CD07-C5D6-D4B1-8C88B5BEE049</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="965ACF16-81B3-7204-2A35-D67AF21E1859"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

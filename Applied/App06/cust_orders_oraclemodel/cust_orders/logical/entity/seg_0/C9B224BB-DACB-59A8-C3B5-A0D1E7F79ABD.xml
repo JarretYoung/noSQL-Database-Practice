@@ -1,0 +1,110 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C9B224BB-DACB-59A8-C3B5-A0D1E7F79ABD" name="CUSTOMER">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:25:59 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="cust_no" id="BF8C838F-1ADE-797D-7BE7-F01F652149BB">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:27:14 UTC</createdTime>
+<commentInRDBMS><![CDATA[Customer Number]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,7,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_name" id="E7129553-A2FD-67C0-E7AB-61D63101BA78">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:27:14 UTC</createdTime>
+<commentInRDBMS><![CDATA[Customer Name]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_address" id="09840A02-CDD2-8F64-F552-96907EC61ECA">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:27:15 UTC</createdTime>
+<commentInRDBMS><![CDATA[Customer Address]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_phone" id="CB662E4B-D374-82F3-C4CF-3F31D1B936CD">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:30:58 UTC</createdTime>
+<commentInRDBMS><![CDATA[Customer Phone]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_level" id="7D176BF1-900D-66CC-79F2-AE7B135A36D3">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:31:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Customer level]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<constraintName>checkCustLevel</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<listOfValues>
+<valueDef value="B" description="Bronze"/>
+<valueDef value="G" description="Gold"/>
+<valueDef value="S" description="Silver"/>
+</listOfValues>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="DD10D2B2-D59B-004C-F900-6422DCADFF18" name="Entity_1 PK">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:28:38 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BF8C838F-1ADE-797D-7BE7-F01F652149BB</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

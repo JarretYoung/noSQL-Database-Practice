@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="7E6E2F23-1F09-C0DF-76B2-71AD374F6093" name="ORDERS">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:33:01 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="order_no" id="DB2754F9-CA8E-D23B-16EF-B3A5E07F2065">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:33:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[Order Number]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,7,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="order_date" id="D1F3979D-BDC3-F751-68F8-249458685BBE">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:36:46 UTC</createdTime>
+<commentInRDBMS><![CDATA[Order Date]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_no" id="E37C050C-8F09-BFC8-E6C4-0165635001F9">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:50:39 UTC</createdTime>
+<generatorID>E63513DA-226A-C802-4058-A7742E37033D</generatorID>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<referedAttribute>BF8C838F-1ADE-797D-7BE7-F01F652149BB</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="62FDA72D-EBE7-E063-D94C-EF8E0EC068E8" name="ORDERS PK">
+<createdBy>NyanCarrot</createdBy>
+<createdTime>2023-04-05 07:36:34 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="E733539F-D11B-1FBD-839A-4311415AF807" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>DB2754F9-CA8E-D23B-16EF-B3A5E07F2065</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
