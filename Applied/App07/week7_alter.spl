@@ -1,0 +1,27 @@
+set echo on
+spool week7_alter_output.txt
+
+ALTER TABLE unit add unit_credit_point NUMBER(2) DEFAULT 6 NOT NULL;
+ALTER TABLE unit add CHECK ( unit_credit_point = 3 or unit_credit_point = 6 or unit_credit_point = 12);
+COMMENT ON COLUMN unit.unit_credit_point IS
+    'Credit Points';
+
+CREATE TABLE course (
+    course_code CHAR(5) NOT NULL,
+    couse_name VARCHAR2(100) NOT NULL,
+    course_totalpoints NUMBER(3) NOT NULL
+);
+ALTER TABLE course ADD CONSTRAINT course_pk PRIMARY KEY (course_code);
+
+CREATE TABLE course_unit (
+    course_code CHAR(5) NOT NULL,
+    unit_code CHAR(7) NOT NULL,
+--    FOREIGN KEY (course_code) REFERENCES course(course_code),
+--    FOREIGN KEY (unit_code) REFERENCES unit(unit_code)
+);
+ALTER TABLE course_unit ADD CONSTRAINT course_unit_pk PRIMARY KEY (course_code, unit_code);
+ALTER TABLE course_unit ADD FOREIGN KEY (course_code) REFERENCES course(course_code);
+ALTER TABLE course_unit ADD FOREIGN KEY (unit_code) REFERENCES unit(unit_code);
+
+spool off
+set echo off

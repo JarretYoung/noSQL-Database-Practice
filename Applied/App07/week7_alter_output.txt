@@ -1,0 +1,11 @@
+SQL> 
+SQL> ALTER TABLE unit add unit_credit_point NUMBER(2) DEFAULT 6 NOT NULL;
+
+Table UNIT altered.
+
+SQL> ALTER TABLE unit add CHECK ( unit_credit_point = 3 or unit_credit_point = 6 or unit_credit_point = 12);
+
+Table UNIT altered.
+
+SQL> 
+SQL> spool off

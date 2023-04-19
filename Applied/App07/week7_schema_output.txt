@@ -1,0 +1,175 @@
+SQL> /*
+SQL>Databases Week 7 Tutorial Class
+SQL>week7_schema.sql
+SQL>
+SQL>Author:
+SQL>
+SQL>*/
+SQL> 
+SQL> -- 7.2
+SQL> -- DDL for Student-Unit-Enrolment model (using ALTER TABLE)
+SQL> --
+SQL> 
+SQL> --
+SQL> -- Place DROP commands at head of schema file
+SQL> --
+SQL> drop table enrolment purge;
+
+Table ENROLMENT dropped.
+
+SQL> drop table student purge;
+
+Table STUDENT dropped.
+
+SQL> drop table unit purge;
+
+Table UNIT dropped.
+
+SQL> drop table course_unit purge;
+
+Error starting at line : 21 in command -
+drop table course_unit purge
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+SQL> drop table course purge;
+
+Error starting at line : 22 in command -
+drop table course purge
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+SQL> -- Create Tables
+SQL> -- Here using both table and column constraints
+SQL> --
+SQL> 
+SQL> CREATE TABLE student (
+  2      stu_nbr     NUMBER(8) NOT NULL,
+  3      stu_lname   VARCHAR2(50) NOT NULL,
+  4      stu_fname   VARCHAR2(50) NOT NULL,
+  5      stu_dob     DATE NOT NULL
+  6  );
+
+Table STUDENT created.
+
+SQL> 
+SQL> COMMENT ON COLUMN student.stu_nbr IS
+  2      'Student number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN student.stu_lname IS
+  2      'Student last name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN student.stu_fname IS
+  2      'Student first name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN student.stu_dob IS
+  2      'Student date of birth';
+
+Comment created.
+
+SQL> 
+SQL> /* Add STUDENT constraints here */
+SQL> ALTER TABLE student ADD CHECK( stu_nbr > 10000000);
+
+Table STUDENT altered.
+
+SQL> /* Add UNIT data types here */
+SQL> CREATE TABLE unit (
+  2      unit_code   CHAR(7),
+  3      unit_name   VARCHAR2(50)
+  4  );
+
+Table UNIT created.
+
+SQL> 
+SQL> COMMENT ON COLUMN unit.unit_code IS
+  2      'Unit code';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN unit.unit_name IS
+  2      'Unit name';
+
+Comment created.
+
+SQL> 
+SQL> /* Add UNIT constraints here */
+SQL> ALTER TABLE unit add UNIQUE (unit_Name);
+
+Table UNIT altered.
+
+SQL> 
+SQL> /* Add ENROLMENT attributes and data types here */
+SQL> CREATE TABLE enrolment (
+  2      stu_nbr NUMBER(8),
+  3      unit_code CHAR(7),
+  4      enrol_year NUMBER(4),
+  5      enrol_semester CHAR(1),
+  6      enrol_mark NUMBER(3),
+  7      enrol_grade CHAR(2)
+  8  );
+
+Table ENROLMENT created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.stu_nbr IS
+  2      'Student number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.unit_code IS
+  2      'Unit code';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.enrol_year IS
+  2      'Enrolment year';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.enrol_semester IS
+  2      'Enrolment semester';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.enrol_mark IS
+  2      'Enrolment mark (real)';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN enrolment.enrol_grade IS
+  2      'Enrolment grade (letter)';
+
+Comment created.
+
+SQL> 
+SQL> /* Add ENROLMENT constraints here */
+SQL> ALTER TABLE enrolment ADD CHECK(enrol_semester = 1 or enrol_semester = 2 or enrol_semester = 3);
+
+Table ENROLMENT altered.
+
+SQL> ALTER TABLE enrolment ADD CONSTRAINT enrolment_pk PRIMARY KEY ( stu_nbr, unit_code, enrol_year, enrol_semester );
+
+Table ENROLMENT altered.
+
+SQL> 
+SQL> spool off 
