@@ -1,0 +1,89 @@
+SQL> 
+SQL> --****PLEASE ENTER YOUR DETAILS BELOW****
+SQL> --sql_portfolio2_basic_intermediate.sql
+SQL> 
+SQL> --Student ID:
+SQL> --Student Name:
+SQL> --Unit Code:
+SQL> --Tutorial Class No:
+SQL> 
+SQL> 
+SQL> /*1*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> SELECT maint_id, to_char(maint_datetime, 'dd-Mon-yyyy HH24:MI') AS maintainence_datetime, prop_address, owner_givname || ' ' || owner_famname as "Owner Name", maint_desc, maint_cost
+  2      FROM RENT.MAINTENANCE NATURAL JOIN RENT.PROPERTY NATURAL JOIN RENT.OWNER
+  3      WHERE maint_cost BETWEEN 1000 AND 3000 AND UPPER(maint_assigned) = UPPER('Y')
+  4      ORDER BY maint_cost DESC, to_date(maint_datetime, 'dd-Mon-yyyy HH24:MI') DESC;
+
+  MAINT_ID MAINTAINENCE_DATETIME      PROP_ADDRESS                                                                     Owner Name                                MAINT_DESC                                         MAINT_COST
+---------- -------------------------- -------------------------------------------------------------------------------- ----------------------------------------- -------------------------------------------------- ----------
+         1 06-Dec-2019 08:45          22 Benjamin Track, Suite 722, 8157, Koelpinmouth, Australian Capital Territory   Joela Boshers                             Painting interior walls, 100m2                           3000
+        12 07-Nov-2022 09:00          284 Princes Highway, Unit 1, 6856, South Annashire, Victoria                     Ronald Meere                              Fly screen replacement for front and back doors          1275
+         9 07-Oct-2022 14:00          284 Princes Highway, Unit 1, 6856, South Annashire, Victoria                     Ronald Meere                              Front door lock replacement                              1275
+        10 22-Oct-2022 13:00          928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          Cleaning the house roof                                  1000
+         7 06-Oct-2022 08:30          284 Princes Highway, Unit 1, 6856, South Annashire, Victoria                     Ronald Meere                              Painting living room walls, 30m2                         1000
+
+SQL> 
+SQL> /*2*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> SELECT R.rent_agreement_no, 
+  2      T.tenant_no, T.tenant_title || ' ' || T.tenant_givname || ' ' || T.tenant_famname as "Tenant Name", 
+  3      P.prop_address, O.owner_givname || ' ' || O.owner_famname as "Owner Name", 
+  4      R.rent_lease_period || ' months' as "Rent Lease Period"
+  5      FROM RENT.OWNER O JOIN RENT.PROPERTY P ON O.owner_no = P.owner_no JOIN RENT.RENT R ON P.prop_no = R.prop_no JOIN RENT.TENANT T ON R.tenant_no = T.tenant_no
+  6      WHERE to_char(rent_lease_start,'yyyy') = 2022 AND rent_weekly_rate <425 AND rent_lease_period >= 6
+  7      ORDER BY rent_lease_period DESC, tenant_no;
+
+RENT_AGREEMENT_NO  TENANT_NO Tenant Name                                     PROP_ADDRESS                                                                     Owner Name                                Rent Lease Period                              
+----------------- ---------- ----------------------------------------------- -------------------------------------------------------------------------------- ----------------------------------------- -----------------------------------------------
+               25       1286 Ms Dacey Demchen                                928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          9 months                                       
+               24       2720 Ms Patricia Stroband                            531 Sienna Run, Suite 991, 6792, Boscoburgh, Queensland                          Ludovika Wiggins                          9 months                                       
+               23       2524 Mr Rich Suggate                                 26 Hackett Knoll, Apt. 615, 6856, South Annashire, Victoria                      Ronald Meere                              6 months                                       
+
+SQL> 
+SQL> /*3*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> 
+SQL> SELECT  tenant_no, 
+  2          tenant_title || '. ' || tenant_givname || ' ' || tenant_famname as "Tenant Name",
+  3          count(*) as num_of_damages, 
+  4          to_char(sum(dam_cost), '$9990.99') as total_dam_cost 
+  5      FROM RENT.TENANT JOIN RENT.RENT USING (tenant_no) JOIN RENT.DAMAGE USING (rent_agreement_no)
+  6      WHERE to_char(dam_datetime,'yyyy') = 2022
+  7      GROUP BY tenant_no, tenant_title, tenant_givname, tenant_famname
+  8      ORDER BY total_dam_cost DESC, tenant_no;
+
+ TENANT_NO Tenant Name                                      NUM_OF_DAMAGES TOTAL_DAM
+---------- ------------------------------------------------ -------------- ---------
+      1286 Ms. Dacey Demchen                                             2  $1650.00
+      2720 Ms. Patricia Stroband                                         2  $1650.00
+      2524 Mr. Rich Suggate                                              1   $500.00
+      4971 Mr. Gustie Hugueville                                         1   $150.00
+
+SQL> 
+SQL> /*4*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> SELECT tenant_no, tenant_title || '. ' || tenant_givname || ' ' || tenant_famname as tenant_name, prop_no, prop_address, count(prop_no) as "number_of_rental_agreements"
+  2      FROM RENT.TENANT JOIN RENT.RENT USING (tenant_no) JOIN RENT.PROPERTY USING (prop_no)  
+  3      WHERE UPPER(prop_address) LIKE UPPER('%Tasmania') 
+  4      GROUP BY tenant_no, tenant_title, tenant_givname, tenant_famname, prop_no, prop_address HAVING count(prop_no) > 1
+  5      ORDER BY tenant_no;
+
+ TENANT_NO TENANT_NAME                                         PROP_NO PROP_ADDRESS                                                                     number_of_rental_agreements
+---------- ------------------------------------------------ ---------- -------------------------------------------------------------------------------- ---------------------------
+      1068 Mrs. Haily Cuardall                                    1984 30 Cox Street, Suite 036, 1100, Fadelland, Tasmania                                                        2
+      1907 Ms. Nadia Jerred                                       2022 536 Emma Meadow, Suite 340, 9498, Woodland, Tasmania                                                       2
+      4971 Mr. Gustie Hugueville                                  1965 4633 Leannon Crescent, Suite 962, 1791, Lake Evaside, Tasmania                                             2
+      9147 Mr. Melly Jerger                                       2117 9167 Heller Lane, Apt. 005, 3172, Alichester, Tasmania                                                     3
+
+SQL> 
+SQL> --Comment out SET ECHO and SPOOL commands before submitting your portfolio
+SQL> SPOOL OFF
