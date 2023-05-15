@@ -1,0 +1,175 @@
+SQL> 
+SQL> --****PLEASE ENTER YOUR DETAILS BELOW****
+SQL> --sql_portfolio3_plsql.sql
+SQL> 
+SQL> --Student ID:
+SQL> --Student Name:
+SQL> --Unit Code:
+SQL> --Tutorial Class No:
+SQL> 
+SQL> -- PLEASE PLACE REQUIRED TRIGGER STATEMENT HERE
+SQL> -- ENSURE your trigger ends with a line break, then a slash (/) then another line break
+SQL> 
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER check_content_policy
+  2  BEFORE INSERT ON POLICY
+  3  FOR EACH ROW
+  4  DECLARE
+  5      furnish_status CHAR;
+  6      prev_policy_enddate DATE;
+  7      count_policy NUMBER;
+  8  BEGIN
+  9          IF (:new.policy_type_code = 'C') then   
+ 10              SELECT prop_fully_furnished into furnish_status FROM PROPERTY WHERE PROPERTY.prop_no = :new.prop_no; 
+ 11              IF (furnish_status = 'N') then
+ 12                  raise_application_error(-20000, 'A content policy cannot be added if the property is not fully furnished.');
+ 13              END IF;           
+ 14          END IF;
+ 15  
+ 16          SELECT count(*) into count_policy FROM POLICY WHERE POLICY.prop_no = :new.prop_no AND UPPER(POLICY.policy_type_code) = UPPER(:new.policy_type_code);
+ 17          IF (count_policy > 0) THEN
+ 18              SELECT to_date(policy_enddate, 'dd-Mon-yyyy') into prev_policy_enddate FROM POLICY WHERE POLICY.prop_no = :new.prop_no AND UPPER(POLICY.policy_type_code) = UPPER(:new.policy_type_code);
+ 19              IF (to_date(:new.policy_startdate, 'dd-Mon-yyyy') <= prev_policy_enddate) then
+ 20                  raise_application_error(-20000, 'A policy for a property cannot be implemented if the previous policy has not expired');
+ 21              END IF;
+ 22          END IF;    
+ 23          dbms_output.put_line('Policy has been created');
+ 24  END;
+ 25  
+ 26  /
+
+Trigger CHECK_CONTENT_POLICY compiled
+
+SQL> 
+SQL> -- PLACE REQUIRED TRIGGER TEST HARNESS HERE
+SQL> -- test harness
+SQL> -- test case 1
+SQL> SELECT * FROM POLICY;
+no rows selected
+SQL> 
+SQL> -- executing trigger 
+SQL> -- fail
+SQL> -- insert policy where property is not furnished
+SQL> insert into POLICY values (11111,5990,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
+
+Error starting at line : 53 in command -
+insert into POLICY values (11111,5990,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS')
+Error report -
+ORA-20000: A content policy cannot be added if the property is not fully furnished.
+ORA-06512: at "GYON0004.CHECK_CONTENT_POLICY", line 9
+ORA-04088: error during execution of trigger 'GYON0004.CHECK_CONTENT_POLICY'
+
+SQL> 
+SQL> --after
+SQL> SELECT * FROM POLICY;
+no rows selected
+SQL> rollback;
+
+Rollback complete.
+
+SQL> --==================================================================================================--
+SQL> -- test harness
+SQL> -- test case 2
+SQL> SELECT * FROM POLICY;
+no rows selected
+SQL> 
+SQL> -- executing trigger 
+SQL> -- pass
+SQL> -- insert policy where property is furnished
+SQL> insert into POLICY values (11111,1965,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
+Policy has been created
+
+
+1 row inserted.
+
+SQL> 
+SQL> --after
+SQL> SELECT * FROM POLICY;
+
+ POLICY_ID    PROP_NO POLICY_ST P POLICY_EN INS
+---------- ---------- --------- - --------- ---
+     11111       1965 01-JAN-21 C 02-FEB-21 LAS
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> --==================================================================================================--
+SQL> -- test harness
+SQL> -- test case 3
+SQL> -- Insert a valid policy
+SQL> insert into POLICY values (11111,1965,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
+Policy has been created
+
+
+1 row inserted.
+
+SQL> SELECT * FROM POLICY;
+
+ POLICY_ID    PROP_NO POLICY_ST P POLICY_EN INS
+---------- ---------- --------- - --------- ---
+     11111       1965 01-JAN-21 C 02-FEB-21 LAS
+
+SQL> 
+SQL> -- executing trigger 
+SQL> -- fail 
+SQL> -- Insert 2nd policy where startdate of the new policy (with similar type and property number) is before the end date of the previous one
+SQL> insert into POLICY values (11112,1965,to_date('21-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
+
+Error starting at line : 81 in command -
+insert into POLICY values (11112,1965,to_date('21-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS')
+Error report -
+ORA-20000: A policy for a property cannot be implemented if the previous policy has not expired
+ORA-06512: at "GYON0004.CHECK_CONTENT_POLICY", line 17
+ORA-04088: error during execution of trigger 'GYON0004.CHECK_CONTENT_POLICY'
+
+SQL> 
+SQL> --after
+SQL> SELECT * FROM POLICY;
+
+ POLICY_ID    PROP_NO POLICY_ST P POLICY_EN INS
+---------- ---------- --------- - --------- ---
+     11111       1965 01-JAN-21 C 02-FEB-21 LAS
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> 
+SQL> --==================================================================================================--
+SQL> -- test harness
+SQL> -- test case 4
+SQL> SELECT * FROM POLICY;
+no rows selected
+SQL> 
+SQL> -- executing trigger 
+SQL> -- fail 
+SQL> -- insert policy where property is furnished then insert 2nd policy where startdate of the new policy (with similar type and property number) is after the end date of the previous one
+SQL> insert into POLICY values (11111,1965,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
+Policy has been created
+
+
+1 row inserted.
+
+SQL> insert into POLICY values (11112,1965,to_date('3-Feb-2021','DD-MON-yyyy'),'C',to_date('02-March-2021','DD-MON-yyyy'),'LAS');
+Policy has been created
+
+
+1 row inserted.
+
+SQL> 
+SQL> --after
+SQL> SELECT * FROM POLICY;
+
+ POLICY_ID    PROP_NO POLICY_ST P POLICY_EN INS
+---------- ---------- --------- - --------- ---
+     11111       1965 01-JAN-21 C 02-FEB-21 LAS
+     11112       1965 03-FEB-21 C 02-MAR-21 LAS
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> 
+SQL> --Comment out SET ECHO, SET SERVEROUTPUT and SPOOL commands before submitting your portfolio
+SQL> SPOOL OFF
