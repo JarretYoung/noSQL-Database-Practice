@@ -37,6 +37,7 @@ BEGIN
                 raise_application_error(-20000, 'A policy for a property cannot be implemented if the previous policy has not expired');
             END IF;
         END IF;    
+        dbms_output.put_line('Policy has been created');
 END;
 
 /
