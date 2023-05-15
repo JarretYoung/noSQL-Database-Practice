@@ -1,7 +1,7 @@
 --Comment out SET ECHO, SET SERVEROUTPUT and SPOOL commands before submitting your portfolio
-SET ECHO ON
-SET SERVEROUTPUT ON
-SPOOL sql_portfolio3_plsql_output.txt
+--SET ECHO ON
+--SET SERVEROUTPUT ON
+--SPOOL sql_portfolio3_plsql_output.txt
 
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --sql_portfolio3_plsql.sql
@@ -100,5 +100,5 @@ SELECT * FROM POLICY;
 rollback;
 
 --Comment out SET ECHO, SET SERVEROUTPUT and SPOOL commands before submitting your portfolio
-SPOOL OFF
-SET ECHO OFF
+--SPOOL OFF
+--SET ECHO OFF
