@@ -6,10 +6,10 @@
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --sql_portfolio3_plsql.sql
 
---Student ID:
---Student Name:
---Unit Code:
---Tutorial Class No:
+--Student ID:       31862616
+--Student Name:     Garret Yong Shern Min
+--Unit Code:        FIT3171
+--Tutorial Class No:06
 
 -- PLEASE PLACE REQUIRED TRIGGER STATEMENT HERE
 -- ENSURE your trigger ends with a line break, then a slash (/) then another line break
@@ -34,7 +34,7 @@ BEGIN
         IF (count_policy > 0) THEN
             SELECT to_date(policy_enddate, 'dd-Mon-yyyy') into prev_policy_enddate FROM POLICY WHERE POLICY.prop_no = :new.prop_no AND UPPER(POLICY.policy_type_code) = UPPER(:new.policy_type_code);
             IF (to_date(:new.policy_startdate, 'dd-Mon-yyyy') <= prev_policy_enddate) then
-                raise_application_error(-20000, 'A policy for a property cannot be implemented if the previous policy has not expired');
+                raise_application_error(-20001, 'A policy for a property cannot be implemented if the previous policy has not expired');
             END IF;
         END IF;    
         dbms_output.put_line('Policy has been created');
@@ -90,7 +90,7 @@ rollback;
 SELECT * FROM POLICY;
 
 -- executing trigger 
--- fail 
+-- pass
 -- insert policy where property is furnished then insert 2nd policy where startdate of the new policy (with similar type and property number) is after the end date of the previous one
 insert into POLICY values (11111,1965,to_date('01-Jan-2021','DD-MON-yyyy'),'C',to_date('02-FEB-2021','DD-MON-yyyy'),'LAS');
 insert into POLICY values (11112,1965,to_date('3-Feb-2021','DD-MON-yyyy'),'C',to_date('02-March-2021','DD-MON-yyyy'),'LAS');
