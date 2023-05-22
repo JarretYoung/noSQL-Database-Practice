@@ -104,12 +104,8 @@ ALTER TABLE cabin add CHECK ( cabin_bathroom_type = 'I' or cabin_bathroom_type =
 -- Add all missing FK Constraints below here
     -- For booking                       
 ALTER TABLE booking 
-    ADD FOREIGN KEY (resort_id) 
-    REFERENCES cabin(resort_id);
-    
-ALTER TABLE booking 
-    ADD FOREIGN KEY (cabin_no) 
-    REFERENCES bin(cabin_no); 
+    ADD FOREIGN KEY (resort_id, cabin_no) 
+    REFERENCES cabin(resort_id , cabin_no);
 
 ALTER TABLE booking 
     ADD FOREIGN KEY (member_id) 
