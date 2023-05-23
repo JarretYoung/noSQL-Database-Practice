@@ -64,9 +64,9 @@ COMMENT ON COLUMN staff.role_id IS
 DESC STAFF;   
 SELECT * FROM STAFF;
 
-ALTER TABLE booking 
+ALTER TABLE staff 
     ADD FOREIGN KEY ( role_id ) 
-    REFERENCES cabin( role_id );
+    REFERENCES role( role_id );
         
 --4(c)
 DROP TABLE CABIN_CLEANING_TASK CASCADE CONSTRAINTS PURGE; 
@@ -75,7 +75,7 @@ DROP TABLE CABIN_CLEANING_STAFF CASCADE CONSTRAINTS PURGE;
 CREATE TABLE CABIN_CLEANING_TASK (
     resort_id                   NUMBER(4) NOT NULL,
     cabin_no                    NUMBER(3) NOT NULL,
-    cct_date               DATE NOT NULL
+    cct_date                    DATE NOT NULL
 );
 
 COMMENT ON COLUMN cabin_cleaning_task.resort_id IS
@@ -93,10 +93,12 @@ ALTER TABLE cabin_cleaning_task
     ADD FOREIGN KEY (resort_id, cabin_no) 
     REFERENCES cabin(resort_id , cabin_no);
 
+DESC CABIN_CLEANING_TASK;
+
 CREATE TABLE CABIN_CLEANING_STAFF (
     resort_id                   NUMBER(4) NOT NULL,
     cabin_no                    NUMBER(3) NOT NULL,
-    cleaning_date               DATE NOT NULL,
+    cct_date                    DATE NOT NULL,
     staff_id                    NUMBER(5) NOT NULL,
     ccs_start_time              DATE,
     ccs_end_time                DATE
@@ -120,13 +122,14 @@ COMMENT ON COLUMN cabin_cleaning_staff.ccs_start_time IS
 COMMENT ON COLUMN cabin_cleaning_staff.ccs_end_time IS
     'Time that the staff';     
 
-ALTER TABLE CABIN_CLEANING_STAFF ADD CONSTRAINT ccs_pk PRIMARY KEY ( resort_id, cabin_no, cct_date, staff_id );
+ALTER TABLE cabin_cleaning_staff ADD CONSTRAINT ccs_pk PRIMARY KEY ( resort_id, cabin_no, cct_date, staff_id );
 
-ALTER TABLE CABIN_CLEANING_STAFF 
-    ADD FOREIGN KEY (resort_id, cabin_no) 
-    REFERENCES CABIN_CLEANING_TASK(resort_id , cabin_no);
+ALTER TABLE cabin_cleaning_staff 
+    ADD FOREIGN KEY (resort_id, cabin_no, cct_date) 
+    REFERENCES CABIN_CLEANING_TASK(resort_id , cabin_no, cct_date);
     
-ALTER TABLE staff
+ALTER TABLE cabin_cleaning_staff
     ADD FOREIGN KEY (staff_id) 
-    REFERENCES CABIN_CLEANING_TASK(staff_id);    
+    REFERENCES staff(staff_id);    
 
+DESC CABIN_CLEANING_TASK;
