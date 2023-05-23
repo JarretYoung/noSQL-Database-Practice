@@ -48,12 +48,12 @@ UPDATE BOOKING
         WHERE booking_id = (SELECT(booking_id) FROM BOOKING WHERE resort_id = (SELECT(resort_id) FROM RESORT WHERE UPPER(resort_name) = UPPER('Awesome Resort') AND town_id = (SELECT town_id FROM TOWN WHERE UPPER(town_name) = UPPER('Broome') AND town_lat = '-17.9644' AND town_long = '122.2304') ) AND cabin_no = 4 and to_date(booking_from) = to_date('26-May-2023', 'dd-Mon-yyyy'));
 commit;
 --3(e)
-DELETE FROM CABIN 
-    WHERE resort_id = (SELECT(resort_id) FROM RESORT WHERE UPPER(resort_name) = UPPER('Awesome Resort') AND town_id = (SELECT town_id FROM TOWN WHERE UPPER(town_name) = UPPER('Broome') AND town_lat = '-17.9644' AND town_long = '122.2304') ) AND
-            cabin_no = '4';
 DELETE FROM BOOKING 
     WHERE resort_id = (SELECT(resort_id) FROM RESORT WHERE UPPER(resort_name) = UPPER('Awesome Resort') AND town_id = (SELECT town_id FROM TOWN WHERE UPPER(town_name) = UPPER('Broome') AND town_lat = '-17.9644' AND town_long = '122.2304') ) AND
             cabin_no = '4' AND
             to_date(booking_from) > to_date('4-May-2023', 'dd-Mon-yyyy');
+DELETE FROM CABIN 
+    WHERE resort_id = (SELECT(resort_id) FROM RESORT WHERE UPPER(resort_name) = UPPER('Awesome Resort') AND town_id = (SELECT town_id FROM TOWN WHERE UPPER(town_name) = UPPER('Broome') AND town_lat = '-17.9644' AND town_long = '122.2304') ) AND
+            cabin_no = '4';            
 commit;                        
             
