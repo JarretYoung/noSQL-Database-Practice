@@ -7,9 +7,9 @@
 --Applied Class No: 06
 
 /* Comments for your marker:
-
-
-
+Assumptions: 
+- There can be more than one staff that can clean a room but they do not need to be at the same time.
+    For instance, staff 1 cleans from 1pm-2pm then staff 2 cleans from 2pm-3pm 
 
 */
 
@@ -110,6 +110,15 @@ COMMENT ON COLUMN cabin_cleaning_staff.cabin_no IS
     
 COMMENT ON COLUMN cabin_cleaning_staff.cct_date IS
     'Date that the cabin is scheduled for cleaning';    
+    
+COMMENT ON COLUMN cabin_cleaning_staff.staff_id IS
+    'Date that the cabin is scheduled for cleaning';     
+    
+COMMENT ON COLUMN cabin_cleaning_staff.ccs_start_time IS
+    'Date that the cabin is scheduled for cleaning';    
+    
+COMMENT ON COLUMN cabin_cleaning_staff.ccs_end_time IS
+    'Time that the staff';     
 
 ALTER TABLE CABIN_CLEANING_STAFF ADD CONSTRAINT ccs_pk PRIMARY KEY ( resort_id, cabin_no, cct_date, staff_id );
 
