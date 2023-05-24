@@ -72,6 +72,7 @@ ALTER TABLE staff
 DROP TABLE CABIN_CLEANING_TASK CASCADE CONSTRAINTS PURGE; 
 DROP TABLE CABIN_CLEANING_STAFF CASCADE CONSTRAINTS PURGE; 
 
+-- Is the table to store information on cleaning activity that needs to be done on a cabin
 CREATE TABLE CABIN_CLEANING_TASK (
     resort_id                   NUMBER(4) NOT NULL,
     cabin_no                    NUMBER(3) NOT NULL,
@@ -95,6 +96,7 @@ ALTER TABLE cabin_cleaning_task
 
 DESC CABIN_CLEANING_TASK;
 
+-- This table contains information on the staff that cleans a cabin and how long they do so
 CREATE TABLE CABIN_CLEANING_STAFF (
     resort_id                   NUMBER(4) NOT NULL,
     cabin_no                    NUMBER(3) NOT NULL,
