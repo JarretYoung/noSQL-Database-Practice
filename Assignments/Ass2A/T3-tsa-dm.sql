@@ -27,6 +27,7 @@ CREATE SEQUENCE booking_seq START WITH 100 INCREMENT BY 10;
 INSERT INTO CABIN values (
     (SELECT(resort_id) FROM RESORT WHERE UPPER(resort_name) = UPPER('Awesome Resort') AND town_id = (SELECT town_id FROM TOWN WHERE UPPER(town_name) = UPPER('Broome') AND town_lat = '-17.9644' AND town_long = '122.2304') ),
     4,4,10,'I',220,'Underground Cabin');
+commit; -- ask how many commits there needs to be
 
 --3(c)
 INSERT INTO BOOKING values ((booking_seq.nextVal), 
