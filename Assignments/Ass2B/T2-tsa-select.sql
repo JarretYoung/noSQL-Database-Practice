@@ -83,7 +83,7 @@ SELECT  r1.resort_id,
         m1.member_no, 
         m1.member_gname || ' ' || m1.member_fname as member_name, 
         m1.member_date_joined, 
-        m2.member_gname || ' ' || m2.member_fname as recommended_by_details, 
+        m2.member_no || ' ' || m2.member_gname || ' ' || m2.member_fname as recommended_by_details, 
         LPAD('$' || to_char(round(SUM(mc1.mc_total))), 13, ' ') as total_charges
     FROM tsa.member m1 
         JOIN tsa.resort r1 ON m1.resort_id = r1.resort_id
@@ -96,8 +96,8 @@ SELECT  r1.resort_id,
                                     JOIN tsa.member m ON m.member_id = mc.member_id
                                     WHERE m.resort_id = r1.resort_id
                                     GROUP BY m.member_id)
-    GROUP BY m1.member_id, m1.member_gname, m1.member_fname, m1.member_no, m1.member_date_joined, m2.member_gname, m2.member_fname, m2.member_no, r1.resort_id, r1.resort_name
-    ORDER BY m1.member_id; 
+    GROUP BY m1.member_id, m1.member_gname, m1.member_fname, m1.member_no, m1.member_date_joined, m2.member_no, m2.member_gname, m2.member_fname, m2.member_no, r1.resort_id, r1.resort_name
+    ORDER BY r1.resort_id, m1.member_no; 
         
     
 
