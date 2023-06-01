@@ -1,10 +1,10 @@
 --*****PLEASE ENTER YOUR DETAILS BELOW*****
 --T2-tsa-select.sql
 
---Student ID:
---Student Name:
---Unit Code:
---Applied Class No:
+--Student ID:       318626166
+--Student Name:     Garret Yong Shern Min
+--Unit Code:        FIT3171
+--Applied Class No: 06
 
 /* Comments for your marker:
 
@@ -60,7 +60,13 @@ SELECT  poi.poi_name,
         town.town_name,
         LPAD('Lat: ' || town.town_lat || ' Long: ' || town.town_long,35,' ') as town_location,
         NVL(COUNT(r.review_id), 0) AS review_count,
-        to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') || '%' as review_percentage
+--        to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') || '%' as review_percentage
+        
+        CASE 
+            WHEN to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') = 0 THEN 'No reviews completed'
+            ELSE to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') || '%'
+        END AS review_percentage
+  
     FROM tsa.point_of_interest poi INNER JOIN tsa.poi_type pt ON poi.poi_type_id = pt.poi_type_id
         INNER JOIN tsa.town ON poi.town_id = town.town_id
         LEFT JOIN tsa.review r ON poi.poi_id = r.poi_id
