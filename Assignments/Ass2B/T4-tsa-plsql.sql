@@ -103,5 +103,83 @@ rollback;
 --4(b) 
 --Write your trigger statement, 
 --finish it with a slash(/) followed by a blank line
+CREATE OR REPLACE TRIGGER NEW_MEMBER_RECOMMENDATION_CHECK 
+BEFORE INSERT ON MEMBER 
+FOR EACH ROW 
+DECLARE 
+        existing_member number;
+        resort_id_rec_mem number;
+BEGIN
+    IF (:new.member_id_recby IS NOT NULL) then
+        SELECT count(*) into existing_member FROM member WHERE member_id = :new.member_id_recby;
+        IF (existing_member = 0) then
+            raise_application_error(-20000, 'Member does not exist');
+        ELSE 
+            SELECT resort_id into resort_id_rec_mem FROM MEMBER WHERE member_id = :new.member_id_recby;
+            IF (resort_id_rec_mem != :new.resort_id) then
+                raise_application_error(-20011, 'Member is not from the same resort');
+            ELSE
+                UPDATE MEMBER SET member_points = member_points + 10 WHERE member_id = :new.member_id_recby;
+            END IF;    
+        END IF;  
+    END IF;    
+END;
+/
+
 
 -- Write Test Harness for 4(b)
+-- test harness
+-- test case 1
+--before
+SELECT * from member;
+
+-- executing trigger
+-- pass
+-- insert valid recommended id from the same resort 
+insert into member VALUES (5,1,3,'Blaidd','Renala','21 Nokron Plex', 'gyon0004@student.monash.edu', 0123456789, to_date('24-Oct-2023', 'dd-Mon-yyyy'),500,1);
+
+--after
+SELECT * from member;
+rollback;
+
+
+-- test case 2
+--before
+SELECT * from member;
+
+-- executing trigger
+-- pass
+-- insert null recommended id 
+insert into member VALUES (5,1,3,'Blaidd','Renala','21 Nokron Plex', 'gyon0004@student.monash.edu', 0123456789, to_date('24-Oct-2023', 'dd-Mon-yyyy'),500, null);
+
+--after
+SELECT * from member;
+rollback;
+
+
+-- test case 3
+--before
+SELECT * from member;
+
+-- executing trigger
+-- fail
+-- insert invalid recommended id 
+insert into member VALUES (5,1,3,'Blaidd','Renala','21 Nokron Plex', 'gyon0004@student.monash.edu', 0123456789, to_date('24-Oct-2023', 'dd-Mon-yyyy'),500, 900);
+
+--after
+SELECT * from member;
+rollback;
+
+
+-- test case 4
+--before
+SELECT * from member;
+
+-- executing trigger
+-- fail
+-- insert valid recommended id from a different resort
+insert into member VALUES (5,1,3,'Blaidd','Renala','21 Nokron Plex', 'gyon0004@student.monash.edu', 0123456789, to_date('24-Oct-2023', 'dd-Mon-yyyy'),500, 2);
+
+--after
+SELECT * from member;
+rollback;
