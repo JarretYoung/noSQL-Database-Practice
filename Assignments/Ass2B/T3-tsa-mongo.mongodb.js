@@ -34,7 +34,7 @@ db.resortInfo.insertMany([
 // PLEASE PLACE REQUIRED MONGODB COMMAND/S FOR THIS PART HERE
 // ENSURE that your query is formatted and has a semicolon
 // (;) at the end of this answer
-db.resortInfo.find({"avg_temperature.summer":{"$gt":25}, "resorts.company_name":"Tropical Dream" });
+// db.resortInfo.find({"avg_temperature.summer":{"$gt":25}, "resorts.company_name":"Tropical Dream" });
 
 ///3(d)
 // PLEASE PLACE REQUIRED MONGODB COMMAND/S FOR THIS PART HERE
@@ -42,21 +42,26 @@ db.resortInfo.find({"avg_temperature.summer":{"$gt":25}, "resorts.company_name":
 // (;) at the end of this answer
 
 
-db.resortInfo.find({"resorts.company_name":"Tropical Dream"});
+// db.resortInfo.find({"resorts.company_name":"Tropical Dream"});
 
-db.resortInfo.updateMany({"resorts.company_name":"Tropical Dream"},{"$set":{"resorts.$.company_name":"Tropical Heaven"}})
+// db.resortInfo.updateMany({"resorts.company_name":"Tropical Dream"},{"$set":{"resorts.$.company_name":"Tropical Heaven"}})
 
-db.resortInfo.find({"resorts.company_name":"Tropical Dream"});
+// db.resortInfo.find({"resorts.company_name":"Tropical Dream"});
 
-db.resortInfo.find({"resorts.company_name":"Tropical Heaven"});
+// db.resortInfo.find({"resorts.company_name":"Tropical Heaven"});
 
 //3(e)
 // PLEASE PLACE REQUIRED MONGODB COMMAND/S FOR THIS PART HERE
 // ENSURE that your query is formatted and has a semicolon
 // (;) at the end of this answer
-
+use("gyon0004");
 db.resortInfo.find({"name": "Mount Isa, QLD", "location.latitude": -20.7256, "location.longitude": 139.4927});
 
+use("gyon0004");
 db.resortInfo.updateOne({"name": "Mount Isa, QLD", "location.latitude": -20.7256, "location.longitude": 139.4927}, {"$push":{"resorts":{"id": 10, "name":"Amazing Resort","address":"40 Moonlight Road","phone":"0228503123","year_built":"2018","company_name":"Australia Experience"}}});
 
+use("gyon0004");
+db.resortInfo.updateOne({"name": "Mount Isa, QLD", "location.latitude": -20.7256, "location.longitude": 139.4927},{"$inc":{"no_of_resorts": 1}});
+
+use("gyon0004");
 db.resortInfo.find({"name": "Mount Isa, QLD", "location.latitude": -20.7256, "location.longitude": 139.4927});
