@@ -60,15 +60,12 @@ SELECT  poi.poi_name,
         town.town_name,
         LPAD('Lat: ' || town.town_lat || ' Long: ' || town.town_long,35,' ') as town_location,
         NVL(COUNT(r.review_id), 0) AS review_count,
---        to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') || '%' as review_percentage
-        
         CASE 
             WHEN to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') = 0 THEN 'No reviews completed'
             ELSE to_char(round(COUNT(r.review_id) * 100 / (SELECT COUNT(*) FROM tsa.review), 2),'90.00') || '%'
         END AS review_percentage
-  
-    FROM tsa.point_of_interest poi INNER JOIN tsa.poi_type pt ON poi.poi_type_id = pt.poi_type_id
-        INNER JOIN tsa.town ON poi.town_id = town.town_id
+    FROM tsa.point_of_interest poi JOIN tsa.poi_type pt ON poi.poi_type_id = pt.poi_type_id
+        JOIN tsa.town ON poi.town_id = town.town_id
         LEFT JOIN tsa.review r ON poi.poi_id = r.poi_id
     GROUP BY poi.poi_id, poi.poi_name, pt.poi_type_descr, town.town_name, town.town_lat, town.town_long
     ORDER BY town.town_name, review_count DESC, poi.poi_name;    
@@ -105,23 +102,19 @@ SELECT  r1.resort_id,
 -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
 -- ENSURE that your query is formatted and has a semicolon
 -- (;) at the end of this answer
-
-SELECT  r1.resort_id, 
+  
+SELECT  r1.resort_id,    
         r1.resort_name, 
         poi1.poi_name, 
-        t1.town_name, 
-        t1.town_state, 
+        t2.town_name, 
+        t2.town_state, 
         NVL(to_char(poi1.poi_open_time, 'HH12:MI AM'), 'Not Applicable') as poi_opening_time,
-        geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long) as distance
-    FROM tsa.resort r1 INNER JOIN tsa.town t1 ON r1.town_id = t1.town_id
-        INNER JOIN tsa.point_of_interest poi1 ON poi1.town_id = t1.town_id
-        LEFT JOIN tsa.town t2 ON t2.town_id <> t1.town_id   
---    FROM (tsa.resort r1 JOIN tsa.town t1 ON r1.town_id = t1.town_id) 
---        JOIN (tsa.point_of_interest poi1 JOIN tsa.town t2 ON poi1.town_id = t2.town_id) ON t1.town_id = poi1.town_id
-    WHERE   geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long) <= 100 
-            OR t2.town_id IS NULL
-            OR (t1.town_id = t2.town_id AND geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long) <= 100)
-    ORDER BY resort_id; 
+        to_char(geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long),'90.0') || ' Kms' AS distance
+  FROM tsa.resort r1
+    JOIN tsa.town t1 ON r1.town_id = t1.town_id
+    JOIN tsa.town t2 ON geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long) <= 100
+    JOIN tsa.point_of_interest poi1 ON t2.town_id = poi1.town_id
+  ORDER BY r1.resort_name, geodistance(t1.town_lat, t1.town_long, t2.town_lat, t2.town_long);
     
     
     
