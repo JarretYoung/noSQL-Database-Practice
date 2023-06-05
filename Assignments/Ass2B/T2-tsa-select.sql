@@ -81,22 +81,21 @@ SELECT  r1.resort_id,
         m1.member_gname || ' ' || m1.member_fname as member_name, 
         m1.member_date_joined, 
         m2.member_no || ' ' || m2.member_gname || ' ' || m2.member_fname as recommended_by_details, 
-        LPAD('$' || to_char(round(SUM(mc1.mc_total))), 13, ' ') as total_charges
+        LPAD('$' || to_char(round(SUM(CASE WHEN mc1.mc_paid_date IS NULL THEN 0 ELSE mc1.mc_total END))), 13, ' ') as total_charges
     FROM tsa.member m1 
         JOIN tsa.resort r1 ON m1.resort_id = r1.resort_id
-        JOIN tsa.town t1 ON r1.town_id = t1.town_id
         JOIN tsa.member_charge mc1 ON m1.member_id = mc1.member_id
         JOIN tsa.member m2 ON m1.member_id_recby = m2.member_id
-    WHERE (NOT (UPPER(t1.town_name) = UPPER('Byron Bay') AND UPPER(t1.town_state) = UPPER('NSW')))
+        JOIN tsa.town t1 ON r1.town_id = t1.town_id
+    WHERE (NOT (UPPER(t1.town_name) = UPPER('Byron Bay') AND UPPER(t1.town_state) = UPPER('NSW') ))
     HAVING SUM(mc1.mc_total) < (SELECT AVG(sum(mc.mc_total))
                                     FROM tsa.member_charge mc  
-                                    JOIN tsa.member m ON m.member_id = mc.member_id
+                                    JOIN tsa.member m ON m.member_id = mc.member_id 
                                     WHERE m.resort_id = r1.resort_id
                                     GROUP BY m.member_id)
     GROUP BY m1.member_id, m1.member_gname, m1.member_fname, m1.member_no, m1.member_date_joined, m2.member_no, m2.member_gname, m2.member_fname, m2.member_no, r1.resort_id, r1.resort_name
     ORDER BY r1.resort_id, m1.member_no; 
         
-    
 
 /*2(f)*/
 -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
