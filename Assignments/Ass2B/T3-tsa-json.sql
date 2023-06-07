@@ -47,8 +47,8 @@ SELECT JSON_ARRAYAGG(
     ) FORMAT JSON
 )
     FROM tsa.town
-        LEFT JOIN tsa.resort ON town.town_id = resort.town_id
-        LEFT JOIN tsa.company ON resort.company_abn = company.company_abn
+        JOIN tsa.resort ON town.town_id = resort.town_id
+        JOIN tsa.company ON resort.company_abn = company.company_abn
     GROUP BY town.town_id, town.town_name, town.town_state, town.town_lat, town.town_long, town.town_avg_summer_temp, town.town_avg_winter_temp
     HAVING COUNT(resort.resort_id) > 0;
     
