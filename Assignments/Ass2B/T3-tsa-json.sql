@@ -8,8 +8,8 @@
 
 /* Comments for your marker:
 
-
-
+Uses the assumption based on the brief that the objects have to be generated
+while wrapped with an array as shown in the image
 
 */
 
